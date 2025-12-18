@@ -41,23 +41,24 @@ def get_string():
     animals_data = load_data(ANIMALS_DATA)
     output = ""
     for animal in animals_data:
+        output += '<li class="cards__item">'
         try:
-            output += f"Name: {animal["name"]}\n"
+            output += f"Name: {animal["name"]}<br/>\n"
         except KeyError:
             pass
         try:
-            output += f"Diet: {animal["characteristics"]["diet"]}\n"
+            output += f"Diet: {animal["characteristics"]["diet"]}<br/>\n"
         except KeyError:
             pass
         try:
-            output += f"Location: {animal["locations"][0]}\n"
+            output += f"Location: {animal["locations"][0]}<br/>\n"
         except KeyError:
             pass
         try:
-            output += f"Type: {animal["characteristics"]["type"]}\n"
+            output += f"Type: {animal["characteristics"]["type"]}<br/>\n"
         except KeyError:
             pass
-        output += "\n"
+        output += '</li>\n'
     return output
 
 
