@@ -37,27 +37,32 @@ def print_animals():
         print()
 
 
+def serialize_animal(animal):
+    output = ""
+    output += '<li class="cards__item">\n'
+    output += f'<div class="card__title">{animal["name"]}</div>\n'
+    output += '<p class="card__text">\n'
+    try:
+        output += f"<strong>Diet:</strong> {animal["characteristics"]["diet"]}<br/>\n"
+    except KeyError:
+        pass
+    try:
+        output += f"<strong>Location:</strong> {animal["locations"][0]}<br/>\n"
+    except KeyError:
+        pass
+    try:
+        output += f"<strong>Type:</strong> {animal["characteristics"]["type"]}<br/>\n"
+    except KeyError:
+        pass
+    output += '</p>\n'
+    output += '</li>\n'
+    return output
+
 def get_string():
     animals_data = load_data(ANIMALS_DATA)
     output = ""
     for animal in animals_data:
-        output += '<li class="cards__item">\n'
-        output += f'<div class="card__title">{animal["name"]}</div>\n'
-        output += '<p class="card__text">\n'
-        try:
-            output += f"<strong>Diet:</strong> {animal["characteristics"]["diet"]}<br/>\n"
-        except KeyError:
-            pass
-        try:
-            output += f"<strong>Location:</strong> {animal["locations"][0]}<br/>\n"
-        except KeyError:
-            pass
-        try:
-            output += f"<strong>Type:</strong> {animal["characteristics"]["type"]}<br/>\n"
-        except KeyError:
-            pass
-        output += '</p>\n'
-        output += '</li>\n'
+        output += serialize_animal(animal)
     return output
 
 
