@@ -1,30 +1,77 @@
 import json
 
+HTML_TEMPLATE = "animals_template.html"
+ANIMALS_DATA = "animals_data.json"
+
 def load_data(file_path):
     """ Loads a JSON file """
     with open(file_path, "r") as handle:
         return json.load(handle)
+    
+
+def save_html(html_string, file_name):
+    with open(file_name, "w") as fileobj:
+        fileobj.write(html_string)
+
 
 
 def print_animals():
-    animals_data = load_data('animals_data.json')
+    animals_data = load_data(ANIMALS_DATA)
     for animal in animals_data:
-        if animal["name"]:
-            print(f"Name: {animal["name"]}")
-        if animal["characteristics"]["diet"]:
-            print(f"Diet: {animal["characteristics"]["diet"]}")
-        if animal["locations"][0]:
-            print(f"Location: {animal["locations"][0]}")
         try:
-            if animal["characteristics"]["type"]:
-                print(f"Type: {animal["characteristics"]["type"]}")
+            print(f"Name: {animal["name"]}")
+        except KeyError:
+            pass   
+        try:
+            print(f"Diet: {animal["characteristics"]["diet"]}")
+        except KeyError:
+            pass        
+        try:
+            print(f"Location: {animal["locations"][0]}")
+        except KeyError:
+            pass
+        try:
+            print(f"Type: {animal["characteristics"]["type"]}")
         except KeyError:
             pass
         print()
 
 
+def get_string():
+    animals_data = load_data(ANIMALS_DATA)
+    output = ""
+    for animal in animals_data:
+        try:
+            output += f"Name: {animal["name"]}\n"
+        except KeyError:
+            pass
+        try:
+            output += f"Diet: {animal["characteristics"]["diet"]}\n"
+        except KeyError:
+            pass
+        try:
+            output += f"Location: {animal["locations"][0]}\n"
+        except KeyError:
+            pass
+        try:
+            output += f"Type: {animal["characteristics"]["type"]}\n"
+        except KeyError:
+            pass
+        output += "\n"
+    return output
+
+
+def get_html():
+    with open(HTML_TEMPLATE, "r") as fileobj:
+        return fileobj.read()
+
+
 def main():
-    print_animals()
+    animals = get_string()
+    html_template = get_html()
+    # print(html_template)
+    html_output = html_template.replace("__REPLACE_ANIMALS_INFO__", animals)
+    save_html(html_output, "animals.html")
 
 
 if __name__ == "__main__":
