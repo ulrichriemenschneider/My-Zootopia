@@ -9,13 +9,21 @@ def load_data(file_path):
         return json.load(handle)
     
 
+def get_html():
+    """ Loads the html-template and returns it as a string """
+    with open(HTML_TEMPLATE, "r") as fileobj:
+        return fileobj.read()
+    
+
 def save_html(html_string, file_name):
+    """ Saves the generated HTML-file """
     with open(file_name, "w") as fileobj:
         fileobj.write(html_string)
 
 
 
 def print_animals():
+    """ Prints the data from json-file """
     animals_data = load_data(ANIMALS_DATA)
     for animal in animals_data:
         try:
@@ -38,6 +46,7 @@ def print_animals():
 
 
 def serialize_animal(animal):
+    """ Serialize the animal-data and returns a string """
     output = ""
     output += '<li class="cards__item">\n'
     output += f'<div class="card__title">{animal["name"]}</div>\n'
@@ -58,17 +67,14 @@ def serialize_animal(animal):
     output += '</li>\n'
     return output
 
+
 def get_string():
+    """ Returns the animal-data as a string """
     animals_data = load_data(ANIMALS_DATA)
     output = ""
     for animal in animals_data:
         output += serialize_animal(animal)
     return output
-
-
-def get_html():
-    with open(HTML_TEMPLATE, "r") as fileobj:
-        return fileobj.read()
 
 
 def main():
